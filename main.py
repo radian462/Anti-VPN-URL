@@ -41,6 +41,6 @@ def index():
     if detect == None:
       redirect('https://discord.gg/mbed')
 
-    return f"{detect}の使用を検出しました。\nお手数ですが{detect}を切断してやり直してください。"
+    return f"{detect}の使用を検出しました。お手数ですが{detect}を切断してやり直してください。<br><br>{detect} use detected. Please disconnect the {detect} and try again."
 
 run(host='0.0.0.0',port=8080)
