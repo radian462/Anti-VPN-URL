@@ -14,6 +14,7 @@ def index():
     response = requests.get(url)
     data = response.json()
 
+    detect = None
     if data['is_vpn'] == True:
       detect = "VPN"
     elif data['is_proxy'] == True:
