@@ -9,19 +9,36 @@ def index():
     else:
         ip_address = request.environ.get('REMOTE_ADDR')
 
-    url = f"https://api.ipapi.is/?q={ip_address}"
-
-    response = requests.get(url)
-    data = response.json()
-
     detect = None
-    if data['is_vpn'] == True:
-      detect = "VPN"
-    elif data['is_proxy'] == True:
-      detect = "Proxy"
-    elif data['is_tor'] == True:
-      detect = "Tor"
-    else:
+    try:
+      API_KEY = os.getenv("VPNAPIIO_KEY")
+
+      url = f"https://vpnapi.io/api/{ip_address}?key={API_KEY}"
+      response = requests.get(url)
+      data = response.json()
+
+      if data['security']['vpn'] == True:
+        detect = "VPN"
+      elif data['security']['proxy'] == True:
+        detect = "Proxy"
+      elif data['security']['tor'] == True:
+        detect = "Tor"
+    except:
+      url = f"https://api.ipapi.is/?q={ip_address}"
+
+      response = requests.get(url)
+      data = response.json()
+
+      if data['is_vpn'] == True:
+        detect = "VPN"
+      elif data['is_proxy'] == True:
+        detect = "Proxy"
+      elif data['is_tor'] == True:
+        detect = "Tor"
+
+    print(ip_address)
+    print(detect)
+    if detect == None:
       redirect('https://discord.gg/mbed')
 
     return f"{detect}の使用を検出しました。\nお手数ですが{detect}を切断してやり直してください。"
