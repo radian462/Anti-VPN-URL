@@ -1,5 +1,6 @@
-from bottle import route, run, request,redirect
+from bottle import route, run, request, redirect
 import requests
+import os
 
 @route('/')
 def index():
@@ -39,7 +40,7 @@ def index():
     print(ip_address)
     print(detect)
     if detect == None:
-      redirect('https://discord.gg/mbed')
+      redirect('https://discord.com/invite/mbed')
 
     return f"{detect}の使用を検出しました。お手数ですが{detect}を切断してやり直してください。<br><br>{detect} use detected. Please disconnect the {detect} and try again."
 
